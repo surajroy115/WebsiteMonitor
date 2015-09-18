@@ -1,10 +1,10 @@
 {
-	"Google": {
-		"url": "https://www.google.fi",
-		"contentRequirements": ["offered in"]
+	"Play Framework": {
+		"url": "https://www.playframework.com/",
+		"contentRequirements": ["Play Framework", "Java and Scala"]
 	},
 	"Lumian": {
 		"url": "http://lumian.kapsi.fi/lumian/",
-		"contentRequirements": ["Game Programmer"]
+		"contentRequirements": ["Poems", "this text is not there"]
 	}
 }
