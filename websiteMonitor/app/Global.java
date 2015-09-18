@@ -6,6 +6,7 @@ import models.ContentRequirement;
 import models.Website;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import play.Play;
 import play.libs.Akka;
 import play.libs.Json;
@@ -58,14 +59,12 @@ public class Global extends GlobalSettings {
 		// parse JSON and create Website model objects
 		for (JsonNode jsonNode : json) {
 			String url = jsonNode.findPath("url").textValue();
-			Website website;
 
 			if (Ebean.find(Website.class).where().eq("url", url).findUnique() != null) {
-				website = Ebean.find(Website.class).where().eq("url", url).findUnique();
+				continue;
 			}
-			else {
-				website = new Website();
-			}
+
+			Website website = new Website();
 
 			List<String> requirements = new ArrayList<>();
 
@@ -96,7 +95,8 @@ public class Global extends GlobalSettings {
 			return new String(Files.readAllBytes(Paths.get(filePath)), encoding);
 		}
 		catch (IOException e) {
-			System.err.println("Global.java: IOException: " + e.getMessage());
+			String message = "Global.java: IOException: " + e.getMessage();
+			Logger.error(message);
 		}
 
 		return null;

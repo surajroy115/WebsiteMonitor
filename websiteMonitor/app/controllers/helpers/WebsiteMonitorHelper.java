@@ -1,6 +1,7 @@
 package controllers.helpers;
 
 import models.Website;
+import play.Logger;
 import play.libs.ws.*;
 import play.libs.F.Promise;
 
@@ -26,19 +27,19 @@ public class WebsiteMonitorHelper {
 			Date responseReceivedDate = new Date();
 			long milliSecondsFromRequestToResponse = (responseReceivedDate.getTime() - requestSentDate.getTime());
 
-			System.err.println("---- MONITORING RESULTS: " + website.url + " ----");
+			Logger.info("---- MONITORING RESULTS: " + website.url + " ----");
 
-			System.err.println("OK: Request sent " + requestSentDate);
-			System.err.println("OK: Response received " + responseReceivedDate);
-			System.err.println("OK: Duration " + milliSecondsFromRequestToResponse + " milliseconds.");
+			Logger.info("Request sent " + requestSentDate);
+			Logger.info("Response received " + responseReceivedDate);
+			Logger.info("Duration " + milliSecondsFromRequestToResponse + " milliseconds.");
 
 			int status = response.getStatus();
 			website.latestStatusCode = status;
 			if (status == 200) {
-				System.err.println("OK: Response status " + response.getStatus());
+				Logger.info("Response status: " + response.getStatus() + " " + response.getStatusText());
 			}
 			else {
-				System.err.println("ERROR: Response status " + response.getStatus());
+				Logger.error("Response status: " + response.getStatus() + " " + response.getStatusText());
 			}
 
 			String pageBody = response.getBody();
@@ -46,10 +47,12 @@ public class WebsiteMonitorHelper {
 
 			for (String contentRequirement : website.getContentRequirements()) {
 				if (pageBody.contains(contentRequirement)) {
-					System.err.println("OK: Webpage contains string '" + contentRequirement + "'.");
+					String message = "OK: Webpage contains string '" + contentRequirement + "'.";
+					Logger.info(message);
 				}
 				else {
-					System.err.println("ERROR: The webpage does not contain string '" + contentRequirement +"'.");
+					String message = "ERROR: The webpage does not contain string '" + contentRequirement +"'.";
+					Logger.error(message);
 					isContentStatusOK = false;
 				}
 			}
