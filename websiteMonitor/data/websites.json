@@ -1,0 +1,10 @@
+{
+	"Google": {
+		"url": "https://www.google.fi",
+		"contentRequirements": ["offered in"]
+	},
+	"Lumian": {
+		"url": "http://lumian.kapsi.fi/lumian/",
+		"contentRequirements": ["Game Programmer"]
+	}
+}
