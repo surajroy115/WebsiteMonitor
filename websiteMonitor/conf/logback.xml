@@ -2,10 +2,21 @@
     
   <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel" />
 
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>${application.home}/logs/application.log</file>
+    <encoder>
+      <pattern>%date [%level] from %logger - %message%n%xException</pattern>
+    </encoder>
+  </appender>
+
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%coloredLevel - %logger - %message%n%xException</pattern>
     </encoder>
+  </appender>
+
+  <appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="FILE" />
   </appender>
 
   <!--
@@ -15,8 +26,10 @@
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
 
-  <root level="ERROR">
+  <root level="WARN">
     <appender-ref ref="STDOUT" />
+    <appender-ref ref="ASYNCFILE" />
+    <appender-ref ref="ASYNCSTDOUT" />
   </root>
 
 </configuration>
