@@ -13,7 +13,8 @@ create table content_requirement (
 create table website (
   id                        bigint not null,
   url                       varchar(255),
-  latest_request_date       date,
+  latest_status_code        integer,
+  is_latest_content_status_ok boolean,
   constraint pk_website primary key (id))
 ;
 

@@ -19,6 +19,10 @@ public class Website extends Model {
 
 	public String url;
 
+	public int latestStatusCode;
+
+	public boolean isLatestContentStatusOk;
+
 	@OneToMany(mappedBy = "website")
 	public List<ContentRequirement> contentRequirements = new ArrayList<>();
 

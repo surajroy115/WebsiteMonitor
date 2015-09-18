@@ -33,6 +33,7 @@ public class WebsiteMonitorHelper {
 			System.err.println("OK: Duration " + milliSecondsFromRequestToResponse + " milliseconds.");
 
 			int status = response.getStatus();
+			website.latestStatusCode = status;
 			if (status == 200) {
 				System.err.println("OK: Response status " + response.getStatus());
 			}
@@ -41,6 +42,7 @@ public class WebsiteMonitorHelper {
 			}
 
 			String pageBody = response.getBody();
+			boolean isContentStatusOK = true;
 
 			for (String contentRequirement : website.getContentRequirements()) {
 				if (pageBody.contains(contentRequirement)) {
@@ -48,8 +50,12 @@ public class WebsiteMonitorHelper {
 				}
 				else {
 					System.err.println("ERROR: The webpage does not contain string '" + contentRequirement +"'.");
+					isContentStatusOK = false;
 				}
 			}
+
+			website.isLatestContentStatusOk = isContentStatusOK;
+			website.save();
 
 			return null;
 		});

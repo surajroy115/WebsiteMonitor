@@ -1,7 +1,22 @@
-@(message: String)
+@(websites: List[models.Website])
 
-@main("Welcome to Play") {
+<html>
+<head>
+	<title>Website Monitor</title>
+	<meta http-equiv="refresh" content="5;">
+</head>
+<body>
 
-    @play20.welcome(message, style = "Java")
-
+@for(website <- websites){
+	<div>
+		<h2>@website.url</h2>
+		@if(website.latestStatusCode > 0){
+			<div>Latest status code: @website.latestStatusCode</div>
+			<div>Latest content check status: @if(website.isLatestContentStatusOk){OK}else{ERROR}</div>
+		}
+		<object type="text/html" data="@website.url" width="600px" height="480px" style="overflow:auto;border:5px ridge blue"></object>
+	</div>
 }
+
+</body>
+</html>
