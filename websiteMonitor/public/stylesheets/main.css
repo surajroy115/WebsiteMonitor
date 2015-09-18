@@ -1,0 +1,12 @@
+.websiteContainer {
+	margin: 10px;
+	background-color: black;
+	display: inline-block;
+	text-align: center;
+}
+
+object {
+	width:600px;
+	height:400px;
+	border:0px;
+}

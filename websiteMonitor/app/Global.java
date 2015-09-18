@@ -57,10 +57,19 @@ public class Global extends GlobalSettings {
 
 		// parse JSON and create Website model objects
 		for (JsonNode jsonNode : json) {
+			String url = jsonNode.findPath("url").textValue();
+			Website website;
+
+			if (Ebean.find(Website.class).where().eq("url", url).findUnique() != null) {
+				website = Ebean.find(Website.class).where().eq("url", url).findUnique();
+			}
+			else {
+				website = new Website();
+			}
+
 			List<String> requirements = new ArrayList<>();
 
-			Website website = new Website();
-			website.url = jsonNode.findPath("url").textValue();
+			website.url = url;
 
 			// read content requirements into a list of strings:
 			if (jsonNode.findPath("contentRequirements").isArray()) {
