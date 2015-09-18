@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +24,20 @@ public class Website extends Model {
 
 	public String url;
 
+	@OneToMany(mappedBy = "website")
+	public List<ContentRequirement> contentRequirements = new ArrayList<>();
+
 	public static List<Website> findAll() {
 		return Ebean.find(Website.class).findList();
+	}
+
+	public List<String> getContentRequirements() {
+		List<String> contentRequirementStrings = new ArrayList<>();
+
+		for (ContentRequirement requirement : contentRequirements) {
+			contentRequirementStrings.add(requirement.requiredText);
+		}
+
+		return contentRequirementStrings;
 	}
 }
